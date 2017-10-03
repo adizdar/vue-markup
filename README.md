@@ -1,6 +1,7 @@
 # vue-markup
 
-> A markup editor build with Vue.js
+> A markup editor build with Vue.js.
+In Progress ... (POC Branch will be developed)
 
 ## Build Setup
 
