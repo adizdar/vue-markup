@@ -1,7 +1,7 @@
 <template>
   <div>
     <markupEditor v-model="fromMarkupEditor"> </markupEditor>
-    <HTMLPreview :content="fromMarkupEditor"></HTMLPreview>
+    <HTMLPreview :content="convertMarkupEditorData"></HTMLPreview>
     <button
       type="button"
       @click="passMarkup"
@@ -15,6 +15,9 @@
 <script type="text/babel">
 import HTMLPreview from '@/components/HTMLPreview/HTMLPreview'
 import MarkupEditor from '@/components/MarkupEditor/MarkupEditor'
+import showdown from 'showdown'
+
+const converter = new showdown.Converter()
 
 export default {
   name: 'editor',
@@ -32,14 +35,19 @@ export default {
   },
 
   computed: {
-
+    convertMarkupEditorData () {
+      return converter.makeHtml(this.fromMarkupEditor)
+    }
   },
 
   methods: {
     passMarkup () {
+      // TODO leave it like this to see if the convert schould be triggered via
+      // TODO button
+
       // We are creating a bridge between the two Components,
       // so the data will be updated only on the button click
-      this.toHTMLPreview = this.fromMarkupEditor
+      // this.toHTMLPreview = this.fromMarkupEditor
     }
   }
 }
