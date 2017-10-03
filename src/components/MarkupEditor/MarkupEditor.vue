@@ -17,6 +17,7 @@
 
 <script type="text/babel">
 import MarkupMirror from '@/components/MarkupEditor/MarkupMirror'
+import lodash from 'lodash'
 
 export default {
   name: 'markupEditor',
@@ -30,11 +31,9 @@ export default {
   },
 
   methods: {
-    $_commitMarkup (markup) {
-      this.$loadash.debounce((markup) => {
-        this.$emit('input', markup)
-      })
-    }
+    $_commitMarkup: lodash.debounce(function (markup) {
+      this.$emit('input', markup)
+    }, 300)
   }
 }
 </script>

@@ -5,14 +5,8 @@ import App from './App'
 import router from './router'
 import 'material-design-lite/dist/material.css'
 import 'material-design-lite/dist/material.js'
-import lodash from 'lodash'
 
 Vue.config.productionTip = false
-
-// Include loadash in evry component via this.$loadash
-Object.defineProperty(
-  Vue.prototype, '$loadash', { value: lodash }
-)
 
 /* eslint-disable no-new */
 new Vue({
