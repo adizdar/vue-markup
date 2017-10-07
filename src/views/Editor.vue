@@ -2,13 +2,16 @@
   <div>
     <markupEditor v-model="fromMarkupEditor"> </markupEditor>
     <HTMLPreview :content="convertMarkupEditorData" class="markdown-body"></HTMLPreview>
+    <!--
+    // TODO leave it like this to see if the convert schould be triggered via
+    // TODO button
     <button
       type="button"
       @click="passMarkup"
       name="commitButton"
       class="vmd-commit-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
       Commit
-    </button>
+    </button> -->
   </div>
 </template>
 
@@ -18,6 +21,7 @@ import MarkupEditor from '@/components/MarkupEditor/MarkupEditor'
 import showdown from 'showdown'
 
 const converter = new showdown.Converter()
+converter.setFlavor('github')
 
 export default {
   name: 'editor',
@@ -36,6 +40,7 @@ export default {
 
   computed: {
     convertMarkupEditorData () {
+      console.log(converter.makeHtml(this.fromMarkupEditor))
       return converter.makeHtml(this.fromMarkupEditor)
     }
   },
