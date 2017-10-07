@@ -6,9 +6,8 @@
  * @props content { @type String }
  */
 <template>
-  <div class="vmd-content-preview">
-    <div v-html="parsedHtml"></div>
-  </div>
+    <div v-html="content">
+    </div>
 </template>
 
 <script type="text/babel">
@@ -22,14 +21,8 @@ export default {
     }
   },
 
-  data () {
-    return {}
-  },
 
   computed: {
-    parsedHtml () {
-      return this.content
-    }
   },
 
   methods: {
