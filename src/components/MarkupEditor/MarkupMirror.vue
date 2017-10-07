@@ -1,3 +1,13 @@
+/**
+ * This component a modified codemirror extension adopted to work with Markup
+ * content.
+ *
+ * The @change event emits a onInputChangeEvent event.
+ *
+ * [MarkupMirror a codemirror extension]
+ * @dependencies vue-codemirror
+ * @emit input -> onInputChange
+ */
 <template>
   <codemirror
     class="vmd-markup-editor-textarea"

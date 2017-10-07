@@ -1,6 +1,6 @@
 
 /**
- * This component is repsonsible to format the markup context.
+ * This component is repsonsible to handle the markup context.
  * Every parent can access the data via the v-model attribute.
  *
  * More info here:
@@ -8,6 +8,7 @@
  *
  * [MarkupMirror codemirror editor]
  * @dependencies {MarkupMirror: @/components/MarkupEditor/MarkupMirror}
+ * @dependencies {lodash}
  */
 <template>
     <MarkupMirror
