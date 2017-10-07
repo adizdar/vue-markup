@@ -1,7 +1,7 @@
 <template>
   <div>
     <markupEditor v-model="fromMarkupEditor"> </markupEditor>
-    <HTMLPreview :content="convertMarkupEditorData"></HTMLPreview>
+    <HTMLPreview :content="convertMarkupEditorData" class="markdown-body"></HTMLPreview>
     <button
       type="button"
       @click="passMarkup"
