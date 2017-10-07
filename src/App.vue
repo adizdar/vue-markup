@@ -5,8 +5,6 @@
 </template>
 
 <script type="text/babel">
-// require('material-design-lite/dist/material.js')
-
 export default {
   name: 'app'
 }
