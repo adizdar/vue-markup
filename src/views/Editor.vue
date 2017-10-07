@@ -18,10 +18,7 @@
 <script type="text/babel">
 import HTMLPreview from '@/components/HTMLPreview/HTMLPreview'
 import MarkupEditor from '@/components/MarkupEditor/MarkupEditor'
-import showdown from 'showdown'
-
-const converter = new showdown.Converter()
-converter.setFlavor('github')
+import converter from '@/util/markdownToHTMLConverter'
 
 export default {
   name: 'editor',
@@ -40,8 +37,7 @@ export default {
 
   computed: {
     convertMarkupEditorData () {
-      console.log(converter.makeHtml(this.fromMarkupEditor))
-      return converter.makeHtml(this.fromMarkupEditor)
+      return converter(this.fromMarkupEditor)
     }
   },
 
