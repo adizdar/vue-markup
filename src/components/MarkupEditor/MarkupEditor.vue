@@ -34,7 +34,7 @@ export default {
   methods: {
     $_commitMarkup: lodash.debounce(function (markup) {
       this.$emit('input', markup)
-    }, 300)
+    }, 400)
   }
 }
 </script>
