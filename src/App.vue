@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style>
+@import 'assets/style/github-markdown.css';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
