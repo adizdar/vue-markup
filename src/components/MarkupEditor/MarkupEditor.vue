@@ -1,4 +1,3 @@
-
 /**
  * This component is repsonsible to handle the markup context.
  * Every parent can access the data via the v-model attribute.
