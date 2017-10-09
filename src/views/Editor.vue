@@ -1,7 +1,13 @@
 <template>
-  <div>
-    <markupEditor v-model="fromMarkupEditor"> </markupEditor>
-    <HTMLPreview :content="convertMarkupEditorData" class="markdown-body"></HTMLPreview>
+  <div class="mdl-grid">
+    <markupEditor
+      class="vmd-editor-markup mdl-cell mdl-cell--6-col"
+      v-model="fromMarkupEditor">
+    </markupEditor>
+    <HTMLPreview
+      class="markdown-body vmd-editor-preview mdl-cell mdl-cell--6-col"
+      :content="convertMarkupEditorData">
+    </HTMLPreview>
     <!--
     // TODO leave it like this to see if the convert schould be triggered via
     // TODO button
@@ -55,7 +61,52 @@ export default {
 </script>
 
 <style scoped>
-  .vmd-content-preview {
-
+  .vmd-editor-preview {
+    position: fixed;
+    margin-left: 0;
+    margin-bottom: 0;
+    top: 0;
+    right: 0;
+    left: 50%;
+    bottom: 0;
+    overflow: auto;
+    padding: 10px;
+    padding-left: 20px;
   }
+
+  .vmd-editor-markup {
+    border-right: 2px solid #E8E8E8;
+    margin-left: 0;
+    margin-bottom: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    height: auto;
+    overflow: auto;
+  }
+
+  /**
+   * @Override
+   */
+  .vmd-editor-markup >>> .CodeMirror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+  }
+
+  /**
+   * @Override
+   */
+  .vmd-editor-markup >>> .CodeMirror-scroll {
+    position: relative;
+    overflow: auto;
+    height: 100%;
+    outline: none;
+ }
 </style>
