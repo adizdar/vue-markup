@@ -12,7 +12,8 @@
 <template>
   <div>
     <MarkupMirror
-    @input="$_commitMarkup">
+    @input="$_commitMarkup"
+    :value="value">
     </MarkupMirror>
   </div>
 </template>
@@ -23,6 +24,13 @@ import lodash from 'lodash'
 
 export default {
   name: 'markupEditor',
+
+  props: {
+    value: {
+      type: String,
+      required: false
+    }
+  },
 
   components: {
     MarkupMirror
