@@ -18,6 +18,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror'
+import 'codemirror/mode/gfm/gfm'
 
 export default {
   name: 'MarkupMirror',
@@ -31,8 +32,8 @@ export default {
       editorOptions: {
         // codemirror options
         tabSize: 4,
-        mode: 'text/x-markdown',
-        theme: 'solarized light',
+        mode: 'gfm', // Github flavor mode
+        theme: 'default',
         lineNumbers: true,
         line: true,
         lineWrapping: true,
