@@ -25,13 +25,14 @@
 import HTMLPreview from '@/components/HTMLPreview/HTMLPreview'
 import MarkupEditor from '@/components/MarkupEditor/MarkupEditor'
 import converter from '@/util/markdownToHTMLConverter'
+import defaultEditorData from '@/assets/markdown-default-data'
 
 export default {
   name: 'editor',
 
   data () {
     return {
-      fromMarkupEditor: '',
+      fromMarkupEditor: defaultEditorData,
       toHTMLPreview: ''
     }
   },
