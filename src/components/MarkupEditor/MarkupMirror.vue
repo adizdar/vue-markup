@@ -17,10 +17,7 @@
 </template>
 
 <script>
-import { codemirror, CodeMirror } from 'vue-codemirror'
-
-CodeMirror.defineMode('mymode', () => {
-})
+import { codemirror } from 'vue-codemirror'
 
 export default {
   name: 'MarkupMirror',
