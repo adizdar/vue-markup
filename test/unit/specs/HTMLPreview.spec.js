@@ -11,13 +11,9 @@ describe('HTMLPreview.vue', () => {
     expect(HTMLPreview.props.content).to.exist
   })
 
-  it('should render HTML', () => {
+  it('should render HTML via props', () => {
     expect(getRenderedText(HTMLPreview, {
       content: '<p>Hello</p>'
-    })).to.equal('Hello')
-
-    expect(getRenderedText(HTMLPreview, {
-      content: '<h1>Hello</h1>'
     })).to.equal('Hello')
   })
 })
