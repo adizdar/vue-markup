@@ -22,7 +22,7 @@ describe('Editor.vue', () => {
 
   it('sets the correct default data', () => {
     const defaultData = Editor.data()
-    expect(defaultData.fromMarkupEditor).to.be.empty
+    expect(defaultData.fromMarkupEditor).to.not.be.empty
   })
 
   it('should have computed', () => {
