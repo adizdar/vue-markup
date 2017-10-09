@@ -308,6 +308,25 @@
   margin: 0;
 }
 
+/**
+ * Override for Material Desing blockquote
+ */
+.markdown-body blockquote::after {
+  content: '';
+  position: inherit;
+  left: inherit;
+  margin-left: inherit;
+}
+
+/**
+ * Override for Material Desing blockquote
+ */
+.markdown-body blockquote::before {
+  content: '';
+  position: inherit;
+  left: inherit;
+}
+
 .markdown-body ul,
 .markdown-body ol {
   padding-left: 0;
