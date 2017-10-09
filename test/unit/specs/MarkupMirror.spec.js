@@ -46,4 +46,16 @@ describe('MarkupMirror.vue', () => {
     // Get the recording of the spy object
     expect(vm.$emit).to.have.been.calledWith('input')
   })
+
+  // Asserting rendered result by actually rendering the component
+  it('should render DOM node & component', () => {
+    var vm = new Vue({
+      template: '<div><MarkupMirror></MarkupMirror></div>',
+      components: {
+        MarkupMirror
+      }
+    }).$mount()
+
+    expect(vm.$el.querySelector('.vmd-markup-editor-textarea')).to.exist
+  })
 })
