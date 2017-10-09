@@ -10,9 +10,11 @@
  * @dependencies {lodash}
  */
 <template>
+  <div>
     <MarkupMirror
     @input="$_commitMarkup">
     </MarkupMirror>
+  </div>
 </template>
 
 <script type="text/babel">
