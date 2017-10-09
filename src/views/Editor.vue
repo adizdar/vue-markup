@@ -64,8 +64,7 @@ export default {
 <style scoped>
   .vmd-editor-preview {
     position: fixed;
-    margin-left: 0;
-    margin-bottom: 0;
+    margin: 0;
     top: 0;
     right: 0;
     left: 50%;
@@ -77,8 +76,7 @@ export default {
 
   .vmd-editor-markup {
     border-right: 2px solid #E8E8E8;
-    margin-left: 0;
-    margin-bottom: 0;
+    margin: 0;
     position: fixed;
     top: 0;
     left: 0;
