@@ -14,6 +14,14 @@ describe('MarkupMirror.vue', () => {
     expect(MarkupMirror.methods.onEditorCodeChange).to.be.a('function')
   })
 
+  it('has props defined', () => {
+    expect(MarkupMirror.props).to.exist
+  })
+
+  it('has value prop defined', () => {
+    expect(MarkupMirror.props.value).to.exist
+  })
+
   it('has data defined', () => {
     expect(MarkupMirror.data).to.exist
   })
