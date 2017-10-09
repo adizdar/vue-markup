@@ -12,6 +12,14 @@ describe('MarkupEditor.vue', () => {
     clock.restore()
   })
 
+  it('has props defined', () => {
+    expect(MarkupEditor.props).to.exist
+  })
+
+  it('has value prop defined', () => {
+    expect(MarkupEditor.props.value).to.exist
+  })
+
   it('has methods defined', () => {
     expect(MarkupEditor.methods).to.exist
   })
