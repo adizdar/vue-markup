@@ -35,8 +35,9 @@ export default {
         theme: 'solarized light',
         lineNumbers: true,
         line: true,
-        highlightFormatting: true,
-        fencedCodeBlockHighlighting: true
+        lineWrapping: true,
+        fencedCodeBlockHighlighting: true,
+        highlightFormatting: true
       }
     }
   },
