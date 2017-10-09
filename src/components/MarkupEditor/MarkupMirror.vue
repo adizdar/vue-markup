@@ -41,7 +41,7 @@ export default {
         // codemirror options
         tabSize: 4,
         mode: 'gfm', // Github flavor mode
-        theme: 'default',
+        theme: '3024-day',
         lineNumbers: true,
         line: true,
         lineWrapping: true,
