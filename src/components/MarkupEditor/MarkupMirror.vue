@@ -12,7 +12,8 @@
   <codemirror
     class="vmd-markup-editor-textarea"
     @change="onEditorCodeChange"
-    :options="editorOptions">
+    :options="editorOptions"
+    :value="value">
   </codemirror>
 </template>
 
@@ -25,6 +26,13 @@ export default {
 
   components: {
     codemirror
+  },
+
+  props: {
+    value: {
+      type: String,
+      required: false
+    }
   },
 
   data () {
