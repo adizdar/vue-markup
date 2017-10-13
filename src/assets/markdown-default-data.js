@@ -17,13 +17,13 @@ const getDefaultMarkdownData = () => {
           '~~spans across \n' +
           'lines~~ \n' +
           '\n' +
-          '## Fenced code blocks (and syntax highlighting) \n' +
+          '## Fenced code blocks (and syntax highlighting) \n \n' +
           '```javascript \n' +
           'for (var i = 0; i < items.length; i++) { \n' +
             '  console.log(items[i], i); // log them \n' +
           '} \n' +
           '```' +
-          '## Task Lists \n' +
+          '\n## Task Lists \n' +
           '\n' +
           '- [ ] Incomplete task list item \n' +
           '- [x] **Completed** task list item \n' +
