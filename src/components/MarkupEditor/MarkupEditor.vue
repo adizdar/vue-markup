@@ -1,6 +1,5 @@
-
 /**
- * This component is repsonsible to format the markup context.
+ * This component is repsonsible to handle the markup context.
  * Every parent can access the data via the v-model attribute.
  *
  * More info here:
@@ -8,18 +7,30 @@
  *
  * [MarkupMirror codemirror editor]
  * @dependencies {MarkupMirror: @/components/MarkupEditor/MarkupMirror}
+ * @dependencies {lodash}
  */
 <template>
+  <div>
     <MarkupMirror
-    @input="$_commitMarkup">
+    @input="$_commitMarkup"
+    :value="value">
     </MarkupMirror>
+  </div>
 </template>
 
 <script type="text/babel">
 import MarkupMirror from '@/components/MarkupEditor/MarkupMirror'
+import lodash from 'lodash'
 
 export default {
   name: 'markupEditor',
+
+  props: {
+    value: {
+      type: String,
+      required: false
+    }
+  },
 
   components: {
     MarkupMirror
@@ -30,11 +41,9 @@ export default {
   },
 
   methods: {
-    $_commitMarkup (markup) {
-      this.$loadash.debounce((markup) => {
-        this.$emit('input', markup)
-      })
-    }
+    $_commitMarkup: lodash.debounce(function (markup) {
+      this.$emit('input', markup)
+    }, 400)
   }
 }
 </script>

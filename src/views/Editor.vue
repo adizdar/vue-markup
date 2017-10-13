@@ -1,27 +1,38 @@
 <template>
-  <div>
-    <markupEditor v-model="fromMarkupEditor"> </markupEditor>
-    <HTMLPreview :content="fromMarkupEditor"></HTMLPreview>
+  <div class="mdl-grid">
+    <markupEditor
+      class="vmd-editor-markup mdl-cell mdl-cell--6-col"
+      v-model="fromMarkupEditor">
+    </markupEditor>
+    <HTMLPreview
+      class="markdown-body vmd-editor-preview mdl-cell mdl-cell--6-col"
+      :content="convertMarkupEditorData">
+    </HTMLPreview>
+    <!--
+    // TODO leave it like this to see if the convert schould be triggered via
+    // TODO button
     <button
       type="button"
       @click="passMarkup"
       name="commitButton"
       class="vmd-commit-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
       Commit
-    </button>
+    </button> -->
   </div>
 </template>
 
 <script type="text/babel">
 import HTMLPreview from '@/components/HTMLPreview/HTMLPreview'
 import MarkupEditor from '@/components/MarkupEditor/MarkupEditor'
+import converter from '@/util/markdownToHTMLConverter'
+import defaultEditorData from '@/assets/markdown-default-data'
 
 export default {
   name: 'editor',
 
   data () {
     return {
-      fromMarkupEditor: '',
+      fromMarkupEditor: defaultEditorData,
       toHTMLPreview: ''
     }
   },
@@ -32,21 +43,69 @@ export default {
   },
 
   computed: {
-
+    convertMarkupEditorData () {
+      return converter(this.fromMarkupEditor)
+    }
   },
 
   methods: {
     passMarkup () {
+      // TODO leave it like this to see if the convert schould be triggered via
+      // TODO button
+
       // We are creating a bridge between the two Components,
       // so the data will be updated only on the button click
-      this.toHTMLPreview = this.fromMarkupEditor
+      // this.toHTMLPreview = this.fromMarkupEditor
     }
   }
 }
 </script>
 
 <style scoped>
-  .vmd-content-preview {
-
+  .vmd-editor-preview {
+    position: fixed;
+    margin: 0;
+    top: 0;
+    right: 0;
+    left: 50%;
+    bottom: 0;
+    overflow: auto;
+    padding: 10px;
+    padding-left: 20px;
   }
+
+  .vmd-editor-markup {
+    border-right: 2px solid #E8E8E8;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    height: auto;
+    overflow: auto;
+  }
+
+  /**
+   * @Override
+   */
+  .vmd-editor-markup >>> .CodeMirror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+  }
+
+  /**
+   * @Override
+   */
+  .vmd-editor-markup >>> .CodeMirror-scroll {
+    position: relative;
+    overflow: auto;
+    height: 100%;
+    outline: none;
+ }
 </style>

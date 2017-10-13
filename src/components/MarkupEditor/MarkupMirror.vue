@@ -1,16 +1,25 @@
+/**
+ * This component a modified codemirror extension adopted to work with Markup
+ * content.
+ *
+ * The @change event emits a onInputChangeEvent event.
+ *
+ * [MarkupMirror a codemirror extension]
+ * @dependencies vue-codemirror
+ * @emit input -> onInputChange
+ */
 <template>
   <codemirror
     class="vmd-markup-editor-textarea"
     @change="onEditorCodeChange"
-    :options="editorOptions">
+    :options="editorOptions"
+    :value="value">
   </codemirror>
 </template>
 
 <script>
-import { codemirror, CodeMirror } from 'vue-codemirror'
-
-CodeMirror.defineMode('mymode', () => {
-})
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/mode/gfm/gfm'
 
 export default {
   name: 'MarkupMirror',
@@ -19,17 +28,25 @@ export default {
     codemirror
   },
 
+  props: {
+    value: {
+      type: String,
+      required: false
+    }
+  },
+
   data () {
     return {
       editorOptions: {
         // codemirror options
         tabSize: 4,
-        mode: 'text/x-markdown',
-        theme: 'solarized light',
+        mode: 'gfm', // Github flavor mode
+        theme: '3024-day',
         lineNumbers: true,
         line: true,
-        highlightFormatting: true,
-        fencedCodeBlockHighlighting: true
+        lineWrapping: true,
+        fencedCodeBlockHighlighting: true,
+        highlightFormatting: true
       }
     }
   },
