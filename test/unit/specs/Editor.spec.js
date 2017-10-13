@@ -48,4 +48,15 @@ describe('Editor.vue', () => {
       done()
     })
   })
+
+  it('has rendered default data', () => {
+    var vm = new Vue({
+      template: '<div><Editor></Editor></div>',
+      components: {
+        Editor
+      }
+    }).$mount()
+
+    expect(vm.$el.querySelector('.vmd-editor-preview')).to.not.be.empty
+  })
 })
