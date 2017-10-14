@@ -64,3 +64,5 @@ npm run e2e
 # run all tests
 npm test
 ```
+## Warnings
+- npm WARN karma-sinon-chai@1.3.2 requires a peer of sinon@^2.1.0 but none is installed. You must install peer dependencies yourself. Issue already exist [here](https://github.com/vuejs-templates/webpack/issues/959) needs to be ignored for now. 
