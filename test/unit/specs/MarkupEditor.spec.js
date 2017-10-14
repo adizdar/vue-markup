@@ -1,4 +1,3 @@
-// import Vue from 'vue'
 import MarkupEditor from '@/components/MarkupEditor/MarkupEditor'
 
 describe('MarkupEditor.vue', () => {
