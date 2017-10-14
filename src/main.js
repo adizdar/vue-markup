@@ -9,8 +9,6 @@ import App from './App'
 import router from './router'
 
 // Style's
-import 'material-design-lite/dist/material.css'
-import 'material-design-lite/dist/material.js'
 
 Vue.config.productionTip = false
 
