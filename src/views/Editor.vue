@@ -1,11 +1,11 @@
 <template>
-  <div class="mdl-grid">
+  <div class="vmd-editor--container">
     <markupEditor
-      class="vmd-editor-markup mdl-cell mdl-cell--6-col"
+      class="vmd-editor vmd-editor--markup"
       v-model="fromMarkupEditor">
     </markupEditor>
     <HTMLPreview
-      class="markdown-body vmd-editor-preview mdl-cell mdl-cell--6-col"
+      class="markdown-body vmd-editor vmd-editor--preview"
       :content="convertMarkupEditorData">
     </HTMLPreview>
     <!--
