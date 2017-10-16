@@ -1,5 +1,6 @@
 <template>
   <div class="vmd-editor--container">
+    <dropdownSettings class="vmd-settings"></dropdownSettings>
     <markupEditor
       class="vmd-editor vmd-editor--markup"
       v-model="fromMarkupEditor">
@@ -22,6 +23,7 @@
 </template>
 
 <script type="text/babel">
+import DropdownSettings from '@/components/DropdownSettings/DropdownSettings'
 import HTMLPreview from '@/components/HTMLPreview/HTMLPreview'
 import MarkupEditor from '@/components/MarkupEditor/MarkupEditor'
 import converter from '@/util/markdownToHTMLConverter'
@@ -38,7 +40,8 @@ export default {
   },
 
   components: {
-    HTMLPreview, // alias for HTMLPreview: HTMLPreview
+    DropdownSettings,
+    HTMLPreview,
     MarkupEditor
   },
 
