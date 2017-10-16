@@ -27,6 +27,7 @@ No tests implemented for now.
 
 ## Style guide:
 https://vuejs.org/v2/style-guide/index.html
+http://slides.com/evanyou/semicolons#/
 
 ## Architecture and Structure
 [guide](http://vuejs-templates.github.io/webpack/) and
@@ -65,4 +66,4 @@ npm run e2e
 npm test
 ```
 ## Warnings
-- npm WARN karma-sinon-chai@1.3.2 requires a peer of sinon@^2.1.0 but none is installed. You must install peer dependencies yourself. Issue already exist [here](https://github.com/vuejs-templates/webpack/issues/959) needs to be ignored for now. 
+- npm WARN karma-sinon-chai@1.3.2 requires a peer of sinon@^2.1.0 but none is installed. You must install peer dependencies yourself. Issue already exist [here](https://github.com/vuejs-templates/webpack/issues/959) needs to be ignored for now.
