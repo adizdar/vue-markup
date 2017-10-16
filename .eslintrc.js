@@ -23,5 +23,14 @@ module.exports = {
     'generator-star-spacing': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
-  }
+  },
+  overrides: [
+    {
+        // Anyoing expect bug eslint fix
+        files: "*.spec.js",
+        rules: {
+            "no-unused-expressions": "off"
+        }
+    }
+]
 }

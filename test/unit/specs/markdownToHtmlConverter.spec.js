@@ -1,4 +1,3 @@
-// import Vue from 'vue'
 import converter from '@/util/markdownToHTMLConverter'
 
 describe('markdownToHtmlConverter.js', () => {

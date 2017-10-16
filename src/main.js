@@ -9,8 +9,8 @@ import App from './App'
 import router from './router'
 
 // Style's
-import 'material-design-lite/dist/material.css'
-import 'material-design-lite/dist/material.js'
+import 'materialize-css/dist/css/materialize.css'
+import 'materialize-css/dist/js/materialize.js'
 
 Vue.config.productionTip = false
 
