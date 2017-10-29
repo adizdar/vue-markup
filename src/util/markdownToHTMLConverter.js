@@ -8,7 +8,6 @@
 
 import showdown from 'showdown'
 import showdownHighlight from 'showdown-highlight'
-import 'highlight.js/styles/default.css'
 
 function markdownToHTMLConverter () {
   const showdownOptions = {

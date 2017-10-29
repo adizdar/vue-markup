@@ -11,6 +11,7 @@ import router from './router'
 // Style's
 import 'materialize-css/dist/css/materialize.css'
 import 'materialize-css/dist/js/materialize.js'
+import 'highlight.js/styles/default.css'
 
 Vue.config.productionTip = false
 
