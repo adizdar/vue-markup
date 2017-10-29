@@ -86,6 +86,11 @@ export default {
     padding-left: 1.2rem;
   }
 
+  .markdown-body >>> [type="checkbox"] {
+    opacity: 1;
+    position: inherit;
+  }
+
   .vmd-editor--markup {
     border-right: 2px solid #E8E8E8;
     left: 0;
