@@ -2,6 +2,8 @@
 
 > A markup editor build with VueJS 2.
 
+The code is divided into the `application` part where the VueJS app is and the `api` part where the NodeJS service is. Every part has its own `README.md` file.
+
 Right now the POC phase is completed and the editor can be used for live
 Markdown to HTML Conversion.
 
