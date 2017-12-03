@@ -28,16 +28,28 @@
 import ExportService from '@/services/ExportService'
 import triggerFileDownloadViaBrowser from '@/util/triggerFileDownload'
 
+/**
+ * @param { string } contentType
+ * @param { * } data
+ */
 const createBlob = (contentType, data) => (
   new Blob([ data ], { type: contentType })
 )
 
+/**
+ * @param { string } contentDisposition
+ */
 const getFileNameFromContentDisposition = (contentDisposition) => (
   contentDisposition
     ? contentDisposition.split('filename=')[1]
     : ''
 )
 
+/**
+ * @param { string } contentType
+ * @param { string } contentDisposition
+ * @param { * } data
+ */
 const getDataAsBlobWithFileName = (contentType, contentDisposition, data) => ({
   blob: createBlob(contentType, data),
   filename: getFileNameFromContentDisposition(contentDisposition) || `${(new Date()).getTime()}`
@@ -63,8 +75,8 @@ export default {
       ExportService
         .asPDF({
           html: this.dataAsHtml,
-          filename: 'teete',
-          options: { responseType: 'blob' }
+          filename: '',
+          options: { responseType: 'blob' } // so the pdf can be converted
         })
         .then(function (response) {
           const { blob, filename } = getDataAsBlobWithFileName(
