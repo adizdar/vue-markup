@@ -1,6 +1,12 @@
+import os from 'os';
 import filesystem from 'fs';
 import ConvertService from '../../services/converter.service';
-// import logger from '../../../common/logger';
+import logger from '../../../common/logger';
+
+/**
+ * Tempory directory path.
+ */
+const TEMP_DIR_PATH = os.tmpdir();
 
 /**
  * Set content type header and disposition header.
@@ -29,7 +35,7 @@ class SaveContentController {
   asPDF(req, res) {
     const html = req.body.html;
     const filename = req.body.filename || Date.now();
-    const path = `${(req.body.path || '') + filename}.pdf`;
+    const path = `${(req.body.path || TEMP_DIR_PATH)}/${filename}.pdf`;
 
     if (!html) {
       res.status(400).send('No html as param send.');
@@ -39,15 +45,19 @@ class SaveContentController {
       .then(stream => {
         const output = filesystem.createWriteStream(path);
 
+        if (!output.writable) {
+          res.status(403).send(`The temp direcori is not writable ${path}`);
+        }
+
         setContentTypeWithDispositionHeader.call(
           res,
           res.setHeader,
-          'application/pdf;',
+          'text/plain',
           `attachment; filename=${filename}.pdf`,
         );
 
         stream.pipe(output);
-        res.status(201).send(`File saved on location ${path}`);
+        res.status(201).send(path);
       })
       .catch(err => {
         res.status(500).send(`A Error occured while converting: ${err}`);
@@ -64,7 +74,7 @@ class SaveContentController {
   asHTML(req, res) {
     const html = req.body.html;
     const filename = req.body.filename || Date.now();
-    const path = `${(req.body.path || '') + filename}.html`;
+    const path = `${(req.body.path || TEMP_DIR_PATH)}/${filename}.pdf`;
 
     if (!html) {
       res.status(400).send('No html as param send.');
@@ -91,7 +101,7 @@ class SaveContentController {
   asMarkdown(req, res) {
     const markdown = req.body.markdown;
     const filename = req.body.filename || Date.now();
-    const path = `${(req.body.path || '') + filename}.html`;
+    const path = `${(req.body.path || TEMP_DIR_PATH)}/${filename}.pdf`;
 
     if (!markdown) {
       res.status(400).send('No markdown as param send.');
