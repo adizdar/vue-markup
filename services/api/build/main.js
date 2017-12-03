@@ -82,7 +82,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _pino = __webpack_require__(12);
+var _pino = __webpack_require__(13);
 
 var _pino2 = _interopRequireDefault(_pino);
 
@@ -119,7 +119,7 @@ var _server = __webpack_require__(6);
 
 var _server2 = _interopRequireDefault(_server);
 
-var _routes = __webpack_require__(13);
+var _routes = __webpack_require__(14);
 
 var _routes2 = _interopRequireDefault(_routes);
 
@@ -183,6 +183,10 @@ var _cookieParser = __webpack_require__(11);
 
 var _cookieParser2 = _interopRequireDefault(_cookieParser);
 
+var _cors = __webpack_require__(12);
+
+var _cors2 = _interopRequireDefault(_cors);
+
 var _logger = __webpack_require__(1);
 
 var _logger2 = _interopRequireDefault(_logger);
@@ -197,6 +201,7 @@ class ExpressServer {
   constructor() {
     const root = path.normalize(`${__dirname}/../..`);
     app.set('appPath', `${root}client`);
+    app.use((0, _cors2.default)());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use((0, _cookieParser2.default)(process.env.SESSION_SECRET));
@@ -252,10 +257,16 @@ module.exports = require("cookie-parser");
 /* 12 */
 /***/ (function(module, exports) {
 
-module.exports = require("pino");
+module.exports = require("cors");
 
 /***/ }),
 /* 13 */
+/***/ (function(module, exports) {
+
+module.exports = require("pino");
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -266,22 +277,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = routes;
 
-var _router = __webpack_require__(18);
+var _router = __webpack_require__(15);
 
 var _router2 = _interopRequireDefault(_router);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const URL_PATH = '/api';
+const VERSION_ONE = '/v1';
+
 function routes(app) {
-  app.use('/api/v1/download', _router2.default);
+  app.use(`${URL_PATH + VERSION_ONE}/download`, _router2.default);
 }
 
 /***/ }),
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -295,7 +305,7 @@ var _express = __webpack_require__(0);
 
 var express = _interopRequireWildcard(_express);
 
-var _controller = __webpack_require__(19);
+var _controller = __webpack_require__(16);
 
 var _controller2 = _interopRequireDefault(_controller);
 
@@ -306,17 +316,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 exports.default = express.Router().post('/ashtml', _controller2.default.asHTML).post('/asmarkdown', _controller2.default.asMarkdown).post('/aspdf', _controller2.default.asPDF);
 
 /***/ }),
-/* 19 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(__dirname) {
+
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _converter = __webpack_require__(20);
+var _converter = __webpack_require__(17);
 
 var _converter2 = _interopRequireDefault(_converter);
 
@@ -326,8 +336,6 @@ var _logger2 = _interopRequireDefault(_logger);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Private part
-
 /**
  * Set content type header and disposition header.
  * It is mainly used in combination with content download.
@@ -336,24 +344,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param { string } type
  * @param { string } disposition
  */
+// import filesystem from 'fs';
 function setContentTypeWithDispositionHeader(callback, type, disposition) {
-  callback.call(this, 'Content-type', type);
   callback.call(this, 'Content-disposition', disposition);
+  callback.call(this, 'Content-type', type);
 }
-
-// Export part
 
 class DownloadContentController {
   asPDF(req, res) {
     const html = req.body.html;
+    const filename = req.body.filename || Date.now();
+    _logger2.default.info(req.body);
+    // const path = `${(req.body.path || '/Users/adizdar1/Documents/Development/vue-markup/') + filename}.pdf`;
 
     if (!html) {
       res.status(400).send('No html as param send.');
     }
 
     _converter2.default.getPdfStreamFromHtml(html).then(stream => {
-      res.status(201).setHeader('Content-type', 'application/pdf');
+      // const output = filesystem.createWriteStream(path);
+      // res.status(201).send(`File saved on location ${path}`);
+      setContentTypeWithDispositionHeader.call(res, res.setHeader, 'application/pdf;', `attachment; filename=${filename}.pdf`);
+
       stream.pipe(res);
+      res.status(201);
     }).catch(err => {
       res.status(500).send(`A Error occured while converting: ${err}`);
     });
@@ -362,6 +376,7 @@ class DownloadContentController {
   asHTML(req, res) {
     const html = req.body.html;
     const filename = req.body.filename || Date.now();
+    // const path = `${(req.body.path || '/Users/adizdar1/Documents/Development/vue-markup/') + filename}.html`;
 
     if (!html) {
       res.status(400).send('No html as param send.');
@@ -369,17 +384,17 @@ class DownloadContentController {
 
     setContentTypeWithDispositionHeader.call(res, res.setHeader, 'text/html; charset=UTF-8', `attachment; filename=${filename}.html`);
 
-    // res.setHeader('Content-type', 'text/html; charset=UTF-8');
-    // res.setHeader('Content-disposition', `attachment; filename=${filename}.html`);
-
-    res.download(__dirname, `${filename}.html`, () => {
-      res.status(201).send(html);
-    });
+    res.write(html);
+    res.end();
+    // res.download(path, `${filename}.html`, () => {
+    //   res.status(201).send(html);
+    // });
   }
 
   asMarkdown(req, res) {
     const markdown = req.body.markdown;
     const filename = req.body.filename || Date.now();
+    // const path = `${(req.body.path || '/Users/adizdar1/Documents/Development/vue-markup/') + filename}.html`;
 
     if (!markdown) {
       res.status(400).send('No markdown as param send.');
@@ -387,20 +402,18 @@ class DownloadContentController {
 
     setContentTypeWithDispositionHeader.call(res, res.setHeader, 'text/markdown; charset=UTF-8', `attachment; filename=${filename}.md`);
 
-    // res.setHeader('Content-type', 'text/markdown; charset=UTF-8');
-    // res.setHeader('Content-disposition', `attachment; filename=${filename}.md`);
-
-    res.download(__dirname, `${filename}.md`, () => {
-      res.status(201).send(markdown);
-    });
+    res.write(markdown);
+    res.end();
+    // res.download(path, `${filename}.md`, () => {
+    //   res.status(201).send(markdown);
+    // });
   }
 }
 
 exports.default = new DownloadContentController();
-/* WEBPACK VAR INJECTION */}.call(exports, "server/api/controllers/downloadContent"))
 
 /***/ }),
-/* 20 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -410,7 +423,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _phantomHtmlToPdf = __webpack_require__(21);
+var _phantomHtmlToPdf = __webpack_require__(18);
 
 var _phantomHtmlToPdf2 = _interopRequireDefault(_phantomHtmlToPdf);
 
@@ -440,7 +453,7 @@ class ConverterService {
 exports.default = new ConverterService(phantomHtmlToPdfConverter);
 
 /***/ }),
-/* 21 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("phantom-html-to-pdf");
