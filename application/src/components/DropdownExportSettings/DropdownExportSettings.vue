@@ -28,6 +28,21 @@
 import ExportService from '@/services/ExportService'
 import triggerFileDownloadViaBrowser from '@/util/triggerFileDownload'
 
+const createBlob = (contentType, data) => (
+  new Blob([ data ], { type: contentType })
+)
+
+const getFileNameFromContentDisposition = (contentDisposition) => (
+  contentDisposition
+    ? contentDisposition.split('filename=')[1]
+    : ''
+)
+
+const getDataAsBlobWithFileName = (contentType, contentDisposition, data) => ({
+  blob: createBlob(contentType, data),
+  filename: getFileNameFromContentDisposition(contentDisposition) || `${(new Date()).getTime()}`
+})
+
 export default {
   name: 'dropdownExportSettings',
 
@@ -44,6 +59,7 @@ export default {
 
   methods: {
     downloadAsPDF () {
+      // Tempory solution, better to use `save` api
       ExportService
         .asPDF({
           html: this.dataAsHtml,
@@ -51,56 +67,35 @@ export default {
           options: { responseType: 'blob' }
         })
         .then(function (response) {
-          // Tempory solution, better is to save in the temp folder
-          const headers = response.headers
-          const blob = new Blob([ response.data ], { type: headers['content-type'] })
-          const filename = response.headers['Content-Disposition']
-            ? response.headers['Content-Disposition'].split('filename=')[1]
-            : `${(new Date()).getTime()}.pdf`
+          const { blob, filename } = getDataAsBlobWithFileName(
+            response.headers['content-type'],
+            response.headers['content-disposition'],
+            response.data
+          )
 
-          triggerFileDownloadViaBrowser(blob, filename)
+          triggerFileDownloadViaBrowser(blob, filename + '.pdf')
         })
         .catch(function (error) { console.error(error) })
     },
 
     downloadAsHTML () {
-      ExportService
-        .asHTML({
-          html: this.dataAsHtml,
-          filename: 'teete'
-          // options: { responseType: 'blob' }
-        })
-        .then(function (response) {
-          // Tempory solution, better is to save in the temp folder
-          const headers = response.headers
-          const blob = new Blob([ response.data ], { type: headers['content-type'] })
-          const filename = response.headers['Content-Disposition']
-            ? response.headers['Content-Disposition'].split('filename=')[1]
-            : `${(new Date()).getTime()}.html`
+      const { blob, filename } = getDataAsBlobWithFileName(
+        'text/html; charset=UTF-8',
+        null,
+        this.dataAsHtml
+      )
 
-          triggerFileDownloadViaBrowser(blob, filename)
-        })
-        .catch(function (error) { console.error(error) })
+      triggerFileDownloadViaBrowser(blob, filename + '.html')
     },
 
     downloadAsMarkdown () {
-      ExportService
-        .asMarkdown({
-          markdown: this.dataAsMarkdown,
-          filename: 'teete',
-          options: { responseType: 'blob' }
-        })
-        .then(function (response) {
-          // Tempory solution, better is to save in the temp folder
-          const headers = response.headers
-          const blob = new Blob([ response.data ], { type: headers['content-type'] })
-          const filename = response.headers['Content-Disposition']
-            ? response.headers['Content-Disposition'].split('filename=')[1]
-            : `${(new Date()).getTime()}.md`
+      const { blob, filename } = getDataAsBlobWithFileName(
+        'text/markdown; charset=UTF-8',
+        null,
+        this.dataAsMarkdown
+      )
 
-          triggerFileDownloadViaBrowser(blob, filename)
-        })
-        .catch(function (error) { console.error(error) })
+      triggerFileDownloadViaBrowser(blob, filename + '.md')
     }
   }
 }
