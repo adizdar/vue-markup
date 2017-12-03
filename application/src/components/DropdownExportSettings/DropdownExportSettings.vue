@@ -34,11 +34,11 @@ export default {
   props: {
     dataAsHtml: {
       type: String,
-      required: false
+      required: true
     },
     dataAsMarkdown: {
       type: String,
-      required: false
+      required: true
     }
   },
 

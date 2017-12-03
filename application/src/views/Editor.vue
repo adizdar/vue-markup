@@ -2,6 +2,8 @@
   <div class="vmd-editor--container">
     <dropdownExportSettings
       class="vmd-settings"
+      :dataAsHtml="converterMarkdownToHTML"
+      :dataAsMarkdown="fromMarkdownEditor">
     </dropdownExportSettings>
     <markupEditor
       class="vmd-editor vmd-editor--markup"
@@ -36,8 +38,8 @@ export default {
 
   data () {
     return {
-      toHTMLPreview: ''
       fromMarkdownEditor: defaultEditorData,
+      converterMarkdownToHTML: ''
     }
   },
 
@@ -49,7 +51,8 @@ export default {
 
   computed: {
     convertMarkupEditorData () {
-      return converter(this.fromMarkdownEditor)
+      this.converterMarkdownToHTML = converter(this.fromMarkdownEditor)
+      return this.converterMarkdownToHTML
     }
   },
 
