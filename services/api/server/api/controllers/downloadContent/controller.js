@@ -1,7 +1,5 @@
 import ConvertService from '../../services/converter.service';
-import logger from '../../../common/logger';
-
-// Private part
+// import logger from '../../../common/logger';
 
 /**
  * Set content type header and disposition header.
@@ -12,15 +10,23 @@ import logger from '../../../common/logger';
  * @param { string } disposition
  */
 function setContentTypeWithDispositionHeader(callback, type, disposition) {
-  callback.call(this, 'Content-type', type);
   callback.call(this, 'Content-disposition', disposition);
+  callback.call(this, 'Content-type', type);
 }
 
-// Export part
-
+/**
+ * Sends the raw content as response so the client can handle the state.
+ */
 class DownloadContentController {
+  /**
+   * Convert html to pdf and return the raw pdf.
+   *
+   * @param {object} req
+   * @param {object} res
+   */
   asPDF(req, res) {
     const html = req.body.html;
+    const filename = req.body.filename || Date.now();
 
     if (!html) {
       res.status(400).send('No html as param send.');
@@ -28,14 +34,28 @@ class DownloadContentController {
 
     ConvertService.getPdfStreamFromHtml(html)
       .then(stream => {
-        res.status(201).setHeader('Content-type', 'application/pdf');
+        setContentTypeWithDispositionHeader.call(
+          res,
+          res.setHeader,
+          'application/pdf;',
+          `attachment; filename=${filename}.pdf`,
+        );
+
         stream.pipe(res);
+        res.status(201);
       })
       .catch(err => {
         res.status(500).send(`A Error occured while converting: ${err}`);
       });
   }
 
+  /**
+   * TODO this method doesn't make sense the client can download the html.
+   * TODO but leave it if we decide to do some styling.
+   *
+   * @param {object} req
+   * @param {object} res
+   */
   asHTML(req, res) {
     const html = req.body.html;
     const filename = req.body.filename || Date.now();
@@ -51,14 +71,17 @@ class DownloadContentController {
       `attachment; filename=${filename}.html`,
     );
 
-    // res.setHeader('Content-type', 'text/html; charset=UTF-8');
-    // res.setHeader('Content-disposition', `attachment; filename=${filename}.html`);
-
-    res.download(__dirname, `${filename}.html`, () => {
-      res.status(201).send(html);
-    });
+    res.write(html);
+    res.end();
   }
 
+  /**
+   * TODO this method doesn't make sense the client can download the markdown.
+   * TODO but leave it if we decide to do some styling.
+   *
+   * @param {object} req
+   * @param {object} res
+   */
   asMarkdown(req, res) {
     const markdown = req.body.markdown;
     const filename = req.body.filename || Date.now();
@@ -74,12 +97,8 @@ class DownloadContentController {
       `attachment; filename=${filename}.md`,
     );
 
-    // res.setHeader('Content-type', 'text/markdown; charset=UTF-8');
-    // res.setHeader('Content-disposition', `attachment; filename=${filename}.md`);
-
-    res.download(__dirname, `${filename}.md`, () => {
-      res.status(201).send(markdown);
-    });
+    res.write(markdown);
+    res.end();
   }
 }
 
