@@ -20,6 +20,9 @@ https://github.com/BenoitZugmeyer/eslint-plugin-html
 
 2. Go to Settings-> linter-eslint and enable "Linter HTML Files"
 
+### TO Enable linter in VSCode
+https://mubaidr.github.io/blog/Vuejs-VsCode/
+
 ## Build Setup
 
 ``` bash
