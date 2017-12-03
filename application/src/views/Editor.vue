@@ -3,7 +3,7 @@
     <dropdownSettings class="vmd-settings"></dropdownSettings>
     <markupEditor
       class="vmd-editor vmd-editor--markup"
-      v-model="fromMarkupEditor">
+      v-model="fromMarkdownEditor">
     </markupEditor>
     <HTMLPreview
       class="markdown-body vmd-editor vmd-editor--preview"
@@ -34,8 +34,8 @@ export default {
 
   data () {
     return {
-      fromMarkupEditor: defaultEditorData,
       toHTMLPreview: ''
+      fromMarkdownEditor: defaultEditorData,
     }
   },
 
@@ -47,7 +47,7 @@ export default {
 
   computed: {
     convertMarkupEditorData () {
-      return converter(this.fromMarkupEditor)
+      return converter(this.fromMarkdownEditor)
     }
   },
 
@@ -58,7 +58,7 @@ export default {
 
       // We are creating a bridge between the two Components,
       // so the data will be updated only on the button click
-      // this.toHTMLPreview = this.fromMarkupEditor
+      // this.toHTMLPreview = this.fromMarkdownEditor
     }
   }
 }
