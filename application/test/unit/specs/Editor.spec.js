@@ -17,12 +17,12 @@ describe('Editor.vue', () => {
 
   it('has the correct default data', () => {
     const defaultData = Editor.data()
-    expect(defaultData.fromMarkupEditor).to.exist
+    expect(defaultData.fromMarkdownEditor).to.exist
   })
 
   it('sets the correct default data', () => {
     const defaultData = Editor.data()
-    expect(defaultData.fromMarkupEditor).to.not.be.empty
+    expect(defaultData.fromMarkdownEditor).to.not.be.empty
   })
 
   it('should have computed', () => {
@@ -57,6 +57,6 @@ describe('Editor.vue', () => {
       }
     }).$mount()
 
-    expect(vm.$el.querySelector('.vmd-editor-preview')).to.not.be.empty
+    expect(vm.$el.querySelector('.vmd-editor--preview')).to.not.be.empty
   })
 })
