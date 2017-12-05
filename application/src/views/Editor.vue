@@ -13,16 +13,6 @@
       class="markdown-body vmd-editor vmd-editor--preview"
       :content="convertMarkupEditorData">
     </HTMLPreview>
-    <!--
-    // TODO leave it like this to see if the convert schould be triggered via
-    // TODO button
-    <button
-      type="button"
-      @click="passMarkup"
-      name="commitButton"
-      class="vmd-commit-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-      Commit
-    </button> -->
   </div>
 </template>
 
@@ -57,14 +47,6 @@ export default {
   },
 
   methods: {
-    passMarkup () {
-      // TODO leave it like this to see if the convert schould be triggered via
-      // TODO button
-
-      // We are creating a bridge between the two Components,
-      // so the data will be updated only on the button click
-      // this.toHTMLPreview = this.fromMarkdownEditor
-    }
   }
 }
 </script>
