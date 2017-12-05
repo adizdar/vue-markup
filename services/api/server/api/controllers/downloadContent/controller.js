@@ -42,7 +42,6 @@ class DownloadContentController {
         );
 
         stream.pipe(res);
-        res.status(201);
       })
       .catch(err => {
         res.status(500).send(`A Error occured while converting: ${err}`);
@@ -67,12 +66,11 @@ class DownloadContentController {
     setContentTypeWithDispositionHeader.call(
       res,
       res.setHeader,
-      'text/html; charset=UTF-8',
+      'text/html; charset=utf-8',
       `attachment; filename=${filename}.html`,
     );
 
-    res.write(html);
-    res.end();
+    res.status(200).send(html);
   }
 
   /**
@@ -93,12 +91,11 @@ class DownloadContentController {
     setContentTypeWithDispositionHeader.call(
       res,
       res.setHeader,
-      'text/markdown; charset=UTF-8',
+      'text/markdown; charset=utf-8',
       `attachment; filename=${filename}.md`,
     );
 
-    res.write(markdown);
-    res.end();
+    res.status(200).send(markdown);
   }
 }
 
